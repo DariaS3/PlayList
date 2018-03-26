@@ -1,5 +1,5 @@
 "use strict";
-document.addEventListener("DOMContentLoad", function() {
+document.addEventListener("DOMContentLoaded", function() {
   var playList = [
     {
       author: "led zeppelin",
@@ -42,14 +42,37 @@ document.addEventListener("DOMContentLoad", function() {
       duration: "3:03"
     }
   ];
-  for (var i = 0; i < arr.length; i++) {
-    var playList2 = [
-      {
-        author: document.getElementsByClassName('autor')=playList[i].author,
-        song: document.getElementsByClassName("songName")=playList[i].song,
-        duration: document.getElementsByClassName("duration")=playList[i].duration
+  var songCounter = playList.length;
+  var resultContainer = document.getElementsByTagName("ul")[0];
+  createPlayList();
+  function createPlayList() {
+    for (var i = 0; i < songCounter; i++) {
+      var arr = [];
+      for (var key in playList[i]) {
+        arr.push(
+          playList[i][key][0].toUpperCase() + playList[i][key].substr(1)
+        );
       }
-    ];
+      resultContainer.appendChild(createElement(arr));
+    }
   }
-  console.log(playList2);
+  function createElement([author, songName, duration]) {
+    var song = document.createElement("li");
+    song.innerHTML =
+      `<svg class="ba-tune__like">
+         <use xlink:href="#icon-heart">
+       </svg>
+      <div class="description">
+        <span class="duration">` +
+      duration +
+      `</span>
+        <span class="autor">` +
+      author +
+      `</span>
+      </div>
+      <div class="songName">` +
+      songName +
+      `</div>`;
+    return song;
+  }
 });
